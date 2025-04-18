@@ -1,11 +1,12 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from .views import *
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'register', UserRegistrationViewSet, basename='register')
-router.register(r'login', LoginViewSet, basename='login')
+#router.register(r'login', LoginViewSet, basename='login')
 router.register(r'garages', GarageViewSet)
 router.register(r'parking-slots', ParkingSlotViewSet)
 router.register(r'vehicles', VehicleViewSet)
@@ -23,6 +24,7 @@ router.register(r'sensors', ParkingSensorViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('password-reset/', RequestPasswordResetEmail.as_view(), name='password-reset'),
     path('reset-password-confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
