@@ -135,7 +135,7 @@ class ParkingSlot(models.Model):
         self.save()
 
 class Vehicle(models.Model):
-    license_plate = models.CharField(max_length=15, unique=True)
+    license_plate = models.CharField(max_length=50, unique=True)
     vehicle_type = models.CharField(max_length=20)  # e.g., Car, Bike, Truck
     user = models.ForeignKey('parking.User',on_delete=models.CASCADE)
     car_model = models.CharField(max_length=20, default=False)
