@@ -122,7 +122,7 @@ class ParkingSlot(models.Model):
     vehicle = models.ForeignKey('Vehicle', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f"Slot {self.slot_number} in Zone {self.parking_zone.name}"
+        return f"Slot {self.slot_number} "
 
     def occupy(self, vehicle):
         self.is_occupied = True
