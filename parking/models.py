@@ -142,7 +142,8 @@ class Vehicle(models.Model):
     vehicle_color = models.CharField(max_length=20,default=False)
 
     def __str__(self):
-        return f"{self.vehicle_type} - {self.plate_number}"
+        return f"{self.vehicle_type} - {self.license_plate}"
+
 
 class Reservation(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
@@ -158,7 +159,7 @@ class Reservation(models.Model):
     # family = models.ForeignKey('FamilyCommunity', on_delete=models.SET_NULL, null=True, blank=True)  # Link reservation to family
 
     def calculate_total_cost(self):
-        garage = self.parking_slot.garage  # Assuming parking_slot has FK to Garage
+        garage = self.parking_slot.garage
         try:
             price_per_hour = float(garage.price_per_hour)
         except ValueError:
@@ -167,13 +168,16 @@ class Reservation(models.Model):
         duration = self.end_time - self.start_time
         duration_in_hours = duration.total_seconds() / 3600
         self.total_cost = round(price_per_hour * duration_in_hours, 2)
-        self.save()
+        # Do not call self.save() here!
 
     def save(self, *args, **kwargs):
-        self.calculate_total_cost()
         super().save(*args, **kwargs)
+        if self.total_cost is None:
+            self.calculate_total_cost()
+
     def __str__(self):
-        return f"Reservation for {self.vehicle.plate_number} in Slot {self.parking_slot.slot_number}"
+        return f"Reservation for {self.vehicle.license_plate} in Slot {self.parking_slot.slot_number}"
+
 
 class Card(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cards')
