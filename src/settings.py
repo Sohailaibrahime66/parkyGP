@@ -148,7 +148,7 @@ WSGI_APPLICATION = 'src.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'smartization_parky',
+        'NAME': 'smartization_smart',
         'USER': '405565',
         'PASSWORD': '123456@smart',
         'HOST': 'mysql-smartization.alwaysdata.net',
