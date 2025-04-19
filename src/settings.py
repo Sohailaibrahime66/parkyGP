@@ -142,10 +142,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'src.wsgi.application'
 
-AUTHENTICATION_BACKENDS = [
-    'parking.authentication.EmailBackend',
-    'django.contrib.auth.backends.ModelBackend',  # optional fallback
-]
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
